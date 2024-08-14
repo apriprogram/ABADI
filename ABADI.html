@@ -8,7 +8,7 @@
     <title>Speech Recognition App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,77 +17,92 @@
             background-image: url('https://media.pn-gunungsugih.go.id//public/images/pn_media_1-66bb1923799ed.jpg');
             background-size: cover;
             background-position: center;
+            background-color: #F9F3F3;
+            background-attachment: fixed;
         }
 
         .container {
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 700px;
-            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(120, 120, 120, 0.2);
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #3A6AFA;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         #output-text {
-            margin-bottom: 20px;
-            font-size: 18px;
-            padding: 50px;
+            font-size: 16px;
+            padding: 20px;
             background-color: #f9f9f9;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: left;
+            color: #333;
+            min-height: 150px;
         }
 
         .button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             margin: 10px;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             border: none;
+            color: #fff;
         }
 
         .button-primary {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #3A6AFA;
         }
 
         .button-primary:hover {
-            background-color: #0056b3;
+            background-color: #2B5BED;
+            transform: scale(1.05);
         }
 
         .button-secondary {
-            background-color: #6c757d;
-            color: #fff;
+            background-color: #FA3A3A;
         }
 
         .button-secondary:hover {
-            background-color: #5a6268;
+            background-color: #ED2B2B;
+            transform: scale(1.05);
         }
 
-        /* Tambahan: ubah warna tulisan "Anda Mengucapkan:" menjadi abu-abu */
+        /* Ubah warna teks di output-text */
         #output-text::before {
             content: "Anda Mengucapkan: ";
-            color: #666; /* Warna abu-abu */
+            color: #666;
         }
-        .logo img {
-      width: 250px;
-      height: auto;
-    }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://pn-gunungsugih.go.id/main/images/2024/LOGO-ABADI.png" alt="Logo PNG">
-          </div>
+            <img src="https://media.pn-gunungsugih.go.id//public/images/pn_media_1-66bc198172a04.png" alt="Logo PNG">
+        </div>
         <h1>Aplikasi Alat Bantu Dengar Disabilitas (ABADI)</h1>
         <button id="start-button" class="button button-primary"><i class="fas fa-microphone"></i> Mulai Mendengarkan</button>
         <button id="restart-button" class="button button-secondary"><i class="fas fa-redo"></i> Restart</button>
-        <div class="card" id="output-text">Teks Hasil Narasi</div>
-
+        <div id="output-text">Teks Hasil Narasi</div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -95,7 +110,7 @@
             var startButton = document.getElementById('start-button');
             var restartButton = document.getElementById('restart-button');
             var recognition = new webkitSpeechRecognition(); // Membuat instance recognizer
-            recognition.lang = 'id-ID'; // Bahasa untuk  mengenali ucapan (sesuaikan dengan kebutuhan)
+            recognition.lang = 'id-ID'; // Bahasa untuk mengenali ucapan (sesuaikan dengan kebutuhan)
             
             // Fungsi untuk mendeteksi dan mengonversi ucapan menjadi teks
             function recognizeSpeech() {
